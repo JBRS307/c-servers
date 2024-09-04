@@ -39,6 +39,8 @@ int listen_socket(int portnum) {
     if (listen(sockfd, N_BACKLOG) < 0) {
         perror_die("ERROR listen");
     }
+
+    return sockfd;
 }
 
 void log_peer_connection(const struct sockaddr_in* sa, socklen_t sa_len) {

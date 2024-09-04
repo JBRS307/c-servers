@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
         struct sockaddr_in peer_addr;
         socklen_t peer_addr_len = sizeof(peer_addr);
 
-        int newsockfd = accept(sockfd, (struct sockaddr*)&peer_addr, peer_addr_len);
+        int newsockfd = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_addr_len);
         
         log_peer_connection(&peer_addr, peer_addr_len);
         serve_connection(newsockfd);
@@ -55,12 +55,12 @@ void serve_connection(int sockfd) {
         for (int i = 0; i < len; i++) {
             switch (state) {
                 case WAIT_FOR_MSG:
-                    if (buf[i] == "^") {
+                    if (buf[i] == '^') {
                         state = IN_MSG;
                     }
                     break;
                 case IN_MSG:
-                    if (buf[i] == "$") {
+                    if (buf[i] == '$') {
                         state = WAIT_FOR_MSG;
                     } else {
                         buf[i]++;
