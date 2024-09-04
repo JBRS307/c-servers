@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.22)
 
 project(sequential_server)
 
+add_compile_options(-Wall -g)
+
 add_executable(main main.c utils.c)
 
 set_target_properties(
