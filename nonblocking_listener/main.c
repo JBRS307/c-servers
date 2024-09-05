@@ -6,8 +6,16 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <time.h>
+#include <string.h>
 
 #include "utils.h"
+
+char* time_string(const time_t* timer) {
+    char* str = ctime(timer);
+    str[strlen(str) - 1] = '\0';
+    return str;
+}
 
 int main(int argc, char** argv) {
     setvbuf(stdout, NULL, _IONBF, 0);
@@ -53,7 +61,9 @@ int main(int argc, char** argv) {
             printf("Peer disconnected!\n");
             break;
         }
-        printf("recv returned %d bytes\n", len);
+        time_t curr_time;
+        time(&curr_time);
+        printf("%s: recv returned %d bytes\n", time_string(&curr_time), len);
     }
 
     close(newsockfd);
